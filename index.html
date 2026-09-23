@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAI Kelas 3 SD - Bab III: Husnuzan & Suuzan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans for friendly Manga/Edu style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                        },
+                        mangaYellow: '#FEF08A',
+                        mangaSky: '#E0F2FE',
+                        mangaPink: '#FCE7F3',
+                    },
+                    fontFamily: {
+                        heading: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            user-select: none;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .comic-border {
+            border: 3px solid #1e293b;
+            box-shadow: 4px 4px 0px #1e293b;
+        }
+        .comic-border-sm {
+            border: 2px solid #1e293b;
+            box-shadow: 3px 3px 0px #1e293b;
+        }
+        .btn-manga {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .btn-manga:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #1e293b !important;
+        }
+        @keyframes floatChar {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-12px) rotate(2.5deg);
+            }
+        }
+        .animate-float-char {
+            animation: floatChar 3.5s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-emerald-50/50 text-slate-800 min-h-screen flex flex-col justify-between antialiased">
+
+    <audio id="bg-audio" loop preload="auto">
+        <source src="https://media1.vocaroo.com/mp3/1lzTPSjXU6R8" type="audio/mp3">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- FLOATING MUSIC TOGGLE BUTTON -->
+    <div class="fixed bottom-5 right-5 z-50">
+        <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-14 h-14 bg-amber-400 hover:bg-amber-300 text-slate-900 rounded-full comic-border flex items-center justify-center text-xl shadow-lg transition transform hover:scale-110" title="Putar/Hentikan Musik Backsound">
+            <i id="audio-icon" class="fa-solid fa-volume-xmark"></i>
+        </button>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-white border-b-4 border-slate-800 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-2xl comic-border-sm flex items-center justify-center text-white text-xl md:text-2xl font-bold">
+                    📖
+                </div>
+                <div>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">PAI Kelas 3 SD</span>
+                    <h1 class="text-base md:text-xl font-bold text-slate-900 leading-tight">Bab III: Husnuzan & Suuzan</h1>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Toggle -->
+            <button id="menu-toggle" onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 bg-emerald-100 rounded-xl comic-border-sm flex items-center justify-center text-slate-800 font-bold text-lg">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Desktop Navigation Tabs -->
+            <nav class="hidden md:flex items-center gap-1 lg:gap-1.5 flex-wrap justify-end">
+                <button onclick="switchTab('beranda')" id="nav-beranda" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-slate-800 bg-emerald-500 text-white shadow-[2px_2px_0px_#1e293b]">
+                    <i class="fa-solid fa-house mr-1"></i> Beranda
+                </button>
+                <button onclick="switchTab('tujuan')" id="nav-tujuan" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-bullseye mr-1"></i> Tujuan
+                </button>
+                <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-book-open mr-1"></i> Materi
+                </button>
+                <button onclick="switchTab('komik')" id="nav-komik" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-masks-theater mr-1"></i> Komik
+                </button>
+                <button onclick="switchTab('video')" id="nav-video" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-circle-play mr-1"></i> Video
+                </button>
+                <button onclick="switchTab('permainan')" id="nav-permainan" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-gamepad mr-1"></i> Permainan
+                </button>
+                <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100">
+                    <i class="fa-solid fa-flag-checkered mr-1"></i> SOAL
+                </button>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t-2 border-slate-800 bg-emerald-50 p-4 space-y-2">
+            <button onclick="switchTab('beranda'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">🏠</span> Beranda
+            </button>
+            <button onclick="switchTab('tujuan'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">🎯</span> Tujuan Pembelajaran
+            </button>
+            <button onclick="switchTab('materi'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-sky-100 flex items-center justify-center text-sky-700">📚</span> Materi PAI
+            </button>
+            <button onclick="switchTab('komik'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-yellow-700">🎨</span> Komik
+            </button>
+            <button onclick="switchTab('video'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-purple-700">🎬</span> Video Pembelajaran
+            </button>
+            <button onclick="switchTab('permainan'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-700">🎮</span> Permainan
+            </button>
+            <button onclick="switchTab('kuis'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-800 bg-white flex items-center gap-3 shadow-[2px_2px_0px_#1e293b]">
+                <span class="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center text-rose-700">🏁</span> SOAL
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-grow">
+
+        <!-- TAB BERANDA -->
+        <section id="tab-beranda" class="tab-content block space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 p-6 md:p-10 rounded-3xl comic-border overflow-hidden">
+                <div class="relative z-10 max-w-xl space-y-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Dibuat Oleh at top-left as requested -->
+                        <p class="text-xs font-bold text-slate-900 bg-amber-200 inline-block px-3 py-1 rounded-full border border-amber-400 shadow-sm comic-border-sm">
+                            👨‍🏫 Dibuat Oleh Azis Fatoni, S.Pd.I
+                        </p>
+                        <span class="inline-block bg-white text-slate-900 font-bold px-3 py-1 rounded-full text-xs md:text-sm comic-border-sm">
+                            ✨ Modul PAI Interaktif SD
+                        </span>
+                    </div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
+                        Menerapkan Akhlak Terpuji Kepada Allah SWT 🌿
+                    </h2>
+                    <p class="text-slate-800 text-sm md:text-base font-medium">
+                        Mari belajar bersama <strong class="text-emerald-900">Ahmad</strong> dan <strong class="text-emerald-900">Aisyah</strong> tentang pentingnya <span class="bg-amber-200 px-1.5 py-0.5 rounded border border-amber-400">Husnuzan (Berbaik Sangka)</span> dan menghindari <span class="bg-rose-200 px-1.5 py-0.5 rounded border border-rose-400">Suuzan (Berburuk Sangka)</span>!
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('materi')" class="btn-manga px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm md:text-base rounded-2xl comic-border-sm flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> Mulai Belajar Materi
+                        </button>
+                        <button onclick="switchTab('kuis')" class="btn-manga px-6 py-3 bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm md:text-base rounded-2xl comic-border-sm flex items-center gap-2">
+                            <i class="fa-solid fa-flag-checkered text-rose-500"></i> Kerjakan SOAL
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Karakter Utama Melingkar & Bergerak -->
+                <div class="mt-6 md:mt-0 md:absolute md:right-8 md:bottom-4 flex justify-center items-center">
+                    <div class="animate-float-char relative w-48 h-48 md:w-60 md:h-60 rounded-full border-4 border-slate-800 bg-gradient-to-br from-amber-200 via-emerald-100 to-sky-200 shadow-[4px_4px_0px_#1e293b] flex items-center justify-center overflow-hidden p-1.5">
+                        <img 
+                            src="https://i.ibb.co.com/605ccpNS/Desain-tanpa-judul-20260922-110513-0000.png" 
+                            alt="Karakter Utama PAI" 
+                            class="w-full h-full object-cover rounded-full drop-shadow-md hover:scale-105 transition-transform duration-300"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x300/22c55e/ffffff?text=Karakter+Utama';"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Cards Grid (Vibrant & Kids Friendly) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
+                <!-- Card 1: Tujuan -->
+                <div onclick="switchTab('tujuan')" class="cursor-pointer bg-gradient-to-br from-amber-100 to-amber-200 hover:from-amber-200 hover:to-amber-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">🎯</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-amber-300 text-amber-900 px-1.5 py-0.5 rounded-md border border-amber-400">Poin 1</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">Tujuan</h3>
+                    </div>
+                </div>
+
+                <!-- Card 2: Materi -->
+                <div onclick="switchTab('materi')" class="cursor-pointer bg-gradient-to-br from-sky-100 to-sky-200 hover:from-sky-200 hover:to-sky-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">📚</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-sky-300 text-sky-900 px-1.5 py-0.5 rounded-md border border-sky-400">Poin 2</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">Materi</h3>
+                    </div>
+                </div>
+
+                <!-- Card 3: Komik -->
+                <div onclick="switchTab('komik')" class="cursor-pointer bg-gradient-to-br from-yellow-100 to-amber-200 hover:from-yellow-200 hover:to-amber-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">🎨</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-yellow-300 text-yellow-900 px-1.5 py-0.5 rounded-md border border-yellow-400">Poin 3</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">Komik</h3>
+                    </div>
+                </div>
+
+                <!-- Card 4: Video -->
+                <div onclick="switchTab('video')" class="cursor-pointer bg-gradient-to-br from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">🎬</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-purple-300 text-purple-900 px-1.5 py-0.5 rounded-md border border-purple-400">Poin 4</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">Video</h3>
+                    </div>
+                </div>
+
+                <!-- Card 5: Permainan (Wordwall & Bebek) -->
+                <div onclick="switchTab('permainan')" class="cursor-pointer bg-gradient-to-br from-orange-100 to-amber-200 hover:from-orange-200 hover:to-amber-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">🎮</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-orange-300 text-orange-900 px-1.5 py-0.5 rounded-md border border-orange-400">Poin 5</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">Permainan</h3>
+                    </div>
+                </div>
+
+                <!-- Card 6: SOAL -->
+                <div onclick="switchTab('kuis')" class="cursor-pointer bg-gradient-to-br from-rose-100 to-rose-200 hover:from-rose-200 hover:to-rose-300 p-4 rounded-3xl comic-border transition flex flex-col justify-between group transform hover:-translate-y-1.5 shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-12 h-12 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-xl shadow-inner group-hover:rotate-6 transition">🏁</div>
+                        <span class="w-7 h-7 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:scale-110 transition shadow">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text-[8px] font-extrabold uppercase tracking-widest bg-rose-300 text-rose-900 px-1.5 py-0.5 rounded-md border border-rose-400">Poin 6</span>
+                        <h3 class="font-extrabold text-sm md:text-base text-slate-900 mt-1">SOAL</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Petunjuk Penggunaan -->
+            <div class="bg-white p-5 rounded-3xl comic-border flex items-start gap-4">
+                <div class="text-3xl p-3 bg-emerald-100 rounded-2xl comic-border-sm">💡</div>
+                <div>
+                    <h4 class="font-bold text-base text-slate-900">Petunjuk Belajar untuk Adik-Adik SD:</h4>
+                    <ul class="text-sm text-slate-700 mt-1 space-y-1 list-disc list-inside">
+                        <li>Gunakan menu navigasi di atas atau kartu warna-warni untuk berpindah halaman.</li>
+                        <li>Nyalakan backsound dengan ikon musik di pojok kanan bawah agar suasana belajar semakin seru.</li>
+                        <li>Baca Materi & Komik, tonton video, mainkan game Wordwall & Balap Bebek, lalu selesaikan SOAL!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB TUJUAN PEMBELAJARAN -->
+        <section id="tab-tujuan" class="tab-content hidden space-y-6">
+            <div class="bg-amber-300 p-6 rounded-3xl comic-border flex flex-col md:flex-row items-center gap-6">
+                <div class="w-20 h-20 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-4xl shrink-0">
+                    🎯
+                </div>
+                <div>
+                    <span class="bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full">Capaian Pembelajaran</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-1">Tujuan Pembelajaran Bab III</h2>
+                    <p class="text-slate-800 text-sm mt-1 font-medium">Setelah mempelajari bab ini, diharapkan adik-adik mampu menguasai poin-poin berikut:</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-3xl comic-border-sm flex gap-4 items-start hover:border-emerald-500 transition">
+                    <div class="w-10 h-10 bg-emerald-500 text-white font-bold rounded-xl comic-border-sm flex items-center justify-center text-lg shrink-0">1</div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Pengertian Husnuzan</h3>
+                        <p class="text-sm text-slate-600 mt-1">Menjelaskan pengertian <strong>husnuzan</strong> (berbaik sangka) kepada Allah Swt. dengan tepat.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-3xl comic-border-sm flex gap-4 items-start hover:border-rose-500 transition">
+                    <div class="w-10 h-10 bg-rose-500 text-white font-bold rounded-xl comic-border-sm flex items-center justify-center text-lg shrink-0">2</div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Pengertian Suuzan</h3>
+                        <p class="text-sm text-slate-600 mt-1">Menjelaskan pengertian <strong>suuzan</strong> (berburuk sangka) kepada Allah Swt. dan mengapa harus dihindari.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-3xl comic-border-sm flex gap-4 items-start hover:border-sky-500 transition">
+                    <div class="w-10 h-10 bg-sky-500 text-white font-bold rounded-xl comic-border-sm flex items-center justify-center text-lg shrink-0">3</div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Manfaat Berbaik Sangka</h3>
+                        <p class="text-sm text-slate-600 mt-1">Menyebutkan berbagai <strong>manfaat terpuji</strong> dari sikap husnuzan kepada Allah Swt.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-3xl comic-border-sm flex gap-4 items-start hover:border-purple-500 transition">
+                    <div class="w-10 h-10 bg-purple-500 text-white font-bold rounded-xl comic-border-sm flex items-center justify-center text-lg shrink-0">4</div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Contoh Sehari-hari</h3>
+                        <p class="text-sm text-slate-600 mt-1">Mengidentifikasi <strong>contoh perilaku husnuzan dan suuzan</strong> dalam kehidupan sehari-hari anak SD.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-sky-100 p-6 rounded-3xl comic-border">
+                <h3 class="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+                    <span>👥</span> Teman Belajar Kita:
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-2xl comic-border-sm flex items-center gap-3">
+                        <div class="w-14 h-14 bg-emerald-200 rounded-full comic-border-sm flex items-center justify-center text-2xl shrink-0">👦🏻</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Ahmad</h4>
+                            <p class="text-xs text-slate-600">Siswa kelas 3 SD yang ceria, rajin shalat, dan selalu berbaik sangka.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl comic-border-sm flex items-center gap-3">
+                        <div class="w-14 h-14 bg-pink-200 rounded-full comic-border-sm flex items-center justify-center text-2xl shrink-0">👧🏽</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Aisyah</h4>
+                            <p class="text-xs text-slate-600">Sahabat Ahmad yang berhijab manis dan suka mengingatkan dalam kebaikan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB MATERI (Restored Original Content with Arabic Terms) -->
+        <section id="tab-materi" class="tab-content hidden space-y-6">
+            <div class="bg-emerald-100 p-6 rounded-3xl comic-border space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">📖</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Materi Pembelajaran PAI Bab III</h2>
+                        <p class="text-xs text-slate-700">Pelajari materi lengkap mengenai Husnuzan dan Suuzan beserta istilah Arab.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl comic-border space-y-6">
+                    <!-- Husnuzan Section -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-extrabold text-emerald-800 flex items-center gap-2">
+                            <span class="p-2 bg-emerald-100 rounded-xl comic-border-sm text-sm">✨</span> 1. Pengertian Husnuzan (Berbaik Sangka)
+                        </h3>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Secara bahasa, kata <strong>Husnuzan</strong> berasal dari gabungan bahasa Arab: <em>Husnu</em> (<span class="font-semibold text-emerald-700">حُسْنُ</span> - baik) dan <em>Az-Zan</em> (<span class="font-semibold text-emerald-700">الظَّنُّ</span> - prasangka). Jadi, husnuzan artinya <ins class="no-underline bg-emerald-50 text-emerald-900 font-semibold px-1 rounded">berbaik sangka kepada Allah Swt</ins>. Menyadari dan meyakini dengan sepenuh hati bahwa segala ketentuan, takdir, dan ujian dari Allah Swt. pasti mengandung kebaikan serta hikmah terbaik bagi hamba-Nya.
+                        </p>
+                        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-xs text-emerald-900 font-semibold space-y-1">
+                            <p class="font-bold text-emerald-900">💬 Hadits Qudsi:</p>
+                            <p class="italic text-slate-800 font-normal">Rasulullah SAW bersabda bahwa Allah Swt. berfirman: "Aku sesuai dengan prasangka hamba-Ku kepada-Ku." (HR. Bukhari & Muslim)</p>
+                        </div>
+                    </div>
+
+                    <!-- Manfaat Husnuzan -->
+                    <div class="space-y-3 pt-4 border-t-2 border-slate-100">
+                        <h3 class="text-lg font-extrabold text-sky-800 flex items-center gap-2">
+                            <span class="p-2 bg-sky-100 rounded-xl comic-border-sm text-sm">🌟</span> Manfaat Berbaik Sangka kepada Allah:
+                        </h3>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>Hati menjadi tenang dan tenteram:</strong> Tidak mudah gelisah saat menghadapi kesulitan atau cobaan hidup.</li>
+                            <li><strong>Menjadi anak yang pantang menyerah:</strong> Terus berusaha dengan giat dan berdoa walau menemui hambatan.</li>
+                            <li><strong>Selalu bersyukur:</strong> Senantiasa mengucapkan Alhamdulillah dalam segala kondisi, baik suka maupun duka.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Contoh Perilaku Husnuzan -->
+                    <div class="space-y-3 pt-4 border-t-2 border-slate-100">
+                        <h3 class="text-lg font-extrabold text-amber-800 flex items-center gap-2">
+                            <span class="p-2 bg-amber-100 rounded-xl comic-border-sm text-sm">💡</span> Contoh Perilaku Husnuzan Sehari-hari:
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
+                            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
+                                <strong>Saat Menghadapi Ujian/Ulangan:</strong> Belajar dengan giat lalu bertawakal kepada Allah, yakin Allah akan memberikan hasil terbaik sesuai usaha kita.
+                            </div>
+                            <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
+                                <strong>Saat Sedang Sakit:</strong> Bersabar minum obat, menjaga kesehatan, dan yakin bahwa sakit adalah cara Allah menggugurkan dosa-dosa kecil kita.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suuzan Section -->
+                    <div class="space-y-3 pt-4 border-t-2 border-slate-100">
+                        <h3 class="text-lg font-extrabold text-rose-800 flex items-center gap-2">
+                            <span class="p-2 bg-rose-100 rounded-xl comic-border-sm text-sm">⚠️</span> 2. Pengertian Suuzan (Berburuk Sangka)
+                        </h3>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Sebaliknya, kata <strong>Suuzan</strong> berasal dari <em>Su'u</em> (<span class="font-semibold text-rose-700">سُوْءُ</span> - buruk) dan <em>Az-Zan</em> (<span class="font-semibold text-rose-700">الظَّنُّ</span> - prasangka). Artinya <ins class="no-underline bg-rose-50 text-rose-900 font-semibold px-1 rounded">berburuk sangka kepada Allah Swt</ins>. Contohnya merasa Allah tidak adil, mengeluh terus-menerus, atau putus asa saat menghadapi cobaan. Suuzan merupakan akhlak tercela (mazmumah) yang wajib dihindari oleh setiap anak saleh dan salehah.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB KOMIK -->
+        <section id="tab-komik" class="tab-content hidden space-y-6">
+            <div class="bg-yellow-100 p-6 rounded-3xl comic-border space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🎨</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Komik</h2>
+                        <p class="text-xs text-slate-700">Cerita bergambar seputar Husnuzan & Suuzan untuk anak-anak.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 md:p-6 rounded-3xl comic-border space-y-4">
+                    <div class="relative group cursor-pointer overflow-hidden rounded-2xl comic-border-sm bg-slate-100" onclick="openComicModal()">
+                        <img 
+                            src="https://i.ibb.co.com/3yQdRdxw/Gemini-Generated-Image-8jl1hs8jl1hs8jl1.jpg" 
+                            alt="Komik Husnuzan dan Suuzan" 
+                            class="w-full h-auto object-contain transition duration-300 group-hover:scale-105"
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x600/22c55e/ffffff?text=Komik+Husnuzan';"
+                        />
+                        <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                            <span class="bg-white text-slate-900 font-bold px-4 py-2 rounded-2xl comic-border-sm text-xs md:text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i> Klik untuk Memperbesar Komik
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="openComicModal()" class="btn-manga px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-xs rounded-xl comic-border-sm inline-flex items-center gap-2">
+                            <i class="fa-solid fa-expand"></i> Buka Tampilan Penuh Komik
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Lightbox Komik -->
+            <div id="comic-modal" class="fixed inset-0 z-50 bg-slate-900/90 hidden backdrop-blur-sm p-4 flex items-center justify-center overflow-auto" onclick="closeComicModal()">
+                <div class="relative max-w-4xl w-full bg-white p-3 md:p-5 rounded-3xl comic-border my-auto" onclick="event.stopPropagation()">
+                    <div class="flex justify-between items-center mb-3 pb-2 border-b-2 border-slate-100">
+                        <h4 class="font-extrabold text-slate-900 text-base md:text-lg flex items-center gap-2">
+                            <span>📖</span> Komik (Layar Penuh)
+                        </h4>
+                        <button onclick="closeComicModal()" class="w-8 h-8 bg-rose-500 text-white font-bold rounded-xl comic-border-sm flex items-center justify-center hover:bg-rose-600 transition">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="max-h-[80vh] overflow-y-auto rounded-2xl">
+                        <img 
+                            src="https://i.ibb.co.com/3yQdRdxw/Gemini-Generated-Image-8jl1hs8jl1hs8jl1.jpg" 
+                            alt="Komik Full View" 
+                            class="w-full h-auto rounded-xl"
+                        />
+                    </div>
+                    <div class="mt-3 text-center">
+                        <button onclick="closeComicModal()" class="btn-manga px-5 py-2 bg-slate-800 text-white text-xs font-bold rounded-xl comic-border-sm">
+                            Tutup Komik
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB VIDEO -->
+        <section id="tab-video" class="tab-content hidden space-y-6">
+            <div class="bg-purple-100 p-6 rounded-3xl comic-border space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🎬</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Video Pembelajaran</h2>
+                        <p class="text-xs text-slate-700">Simak video animasi penjelasan Husnuzan & Suuzan!</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 rounded-3xl p-2 md:p-3 comic-border">
+                    <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner">
+                        <iframe 
+                            src="https://drive.google.com/file/d/1PplA_PUNlbmNNT_Eke5R9MMRfXNSOHtC/preview" 
+                            class="w-full h-full border-0 rounded-2xl"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="mt-3 flex flex-col sm:flex-row items-center justify-between gap-2 px-2 pb-1">
+                        <span class="text-xs text-slate-300 flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-circle-info text-amber-400"></i> Jika video tidak otomatis diputar, buka tautan resmi:
+                        </span>
+                        <a href="https://drive.google.com/file/d/1PplA_PUNlbmNNT_Eke5R9MMRfXNSOHtC/view?usp=drivesdk" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn-manga px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl text-xs comic-border-sm inline-flex items-center gap-2 shrink-0">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka di Google Drive
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB PERMAINAN (Wordwall & Balap Bebek) -->
+        <section id="tab-permainan" class="tab-content hidden space-y-8">
+            <div class="bg-orange-100 p-6 rounded-3xl comic-border space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🎮</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Menu Permainan Edukatif</h2>
+                        <p class="text-xs text-slate-700">Pilih permainan seru di bawah ini untuk menguji pemahamanmu!</p>
+                    </div>
+                </div>
+
+                <!-- Sub-Menu 1: Wordwall Game -->
+                <div class="bg-white p-5 rounded-3xl comic-border-sm space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-2 pb-3 border-b-2 border-slate-100">
+                        <h3 class="font-extrabold text-slate-900 text-base md:text-lg flex items-center gap-2">
+                            <span class="p-2 bg-orange-100 rounded-xl">🎯</span> Game Wordwall Husnuzan & Suuzan
+                        </h3>
+                        <a href="https://wordwall.net/resource/119683134?wwmethod=link" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn-manga px-4 py-2 bg-orange-400 hover:bg-orange-300 text-slate-900 font-bold rounded-xl text-xs comic-border-sm inline-flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-external-link-alt"></i> Buka Fullscreen Wordwall
+                        </a>
+                    </div>
+                    <div class="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-50 border-2 border-slate-200 shadow-inner">
+                        <iframe 
+                            src="https://wordwall.net/embed/1e7bc1a0b8da43d0b3e5cd420bdab767?themeId=1&templateId=3&fontStackId=0" 
+                            class="w-full h-full border-0 rounded-2xl"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Sub-Menu 2: Balap Bebek Game -->
+                <div class="bg-white p-5 rounded-3xl comic-border-sm space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-2 pb-3 border-b-2 border-slate-100">
+                        <h3 class="font-extrabold text-slate-900 text-base md:text-lg flex items-center gap-2">
+                            <span class="p-2 bg-amber-100 rounded-xl">🦆</span> Game Balap Bebek Interaktif
+                        </h3>
+                        <a href="https://duck-race-name-picker.github.io/classroom/" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn-manga px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl text-xs comic-border-sm inline-flex items-center gap-1.5 shadow">
+                            <i class="fa-solid fa-external-link-alt"></i> Buka Fullscreen Balap Bebek
+                        </a>
+                    </div>
+                    <div class="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden bg-slate-50 border-2 border-slate-200 shadow-inner">
+                        <iframe 
+                            src="https://duck-race-name-picker.github.io/classroom/" 
+                            class="w-full h-full border-0 rounded-2xl"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB SOAL -->
+        <section id="tab-kuis" class="tab-content hidden space-y-6">
+            <div class="bg-rose-100 p-6 rounded-3xl comic-border flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 bg-white rounded-2xl comic-border-sm flex items-center justify-center text-3xl shrink-0">
+                        🏁
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900">SOAL PAI Kelas 3</h2>
+                        <p class="text-xs text-slate-700 font-medium">Jawab setiap pertanyaan dengan benar dan raih skor tertinggi!</p>
+                    </div>
+                </div>
+                <div class="bg-white px-4 py-2 rounded-2xl comic-border-sm font-bold text-slate-900 text-sm">
+                    Skor: <span id="quiz-score" class="text-emerald-600 text-lg">0</span> / 100
+                </div>
+            </div>
+
+            <!-- Quiz Card Box -->
+            <div id="quiz-container" class="bg-white p-6 rounded-3xl comic-border space-y-6">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-500 border-b-2 border-slate-100 pb-3">
+                    <span id="question-number">Soal 1 dari 10</span>
+                    <span class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Tingkat SD Kelas 3</span>
+                </div>
+
+                <h3 id="question-text" class="text-lg md:text-xl font-bold text-slate-900 leading-snug">
+                    Memuat soal...
+                </h3>
+
+                <div id="options-grid" class="grid grid-cols-1 gap-3">
+                    <!-- Options inserted via JS -->
+                </div>
+
+                <div id="feedback-box" class="hidden p-4 rounded-2xl border-2 space-y-2">
+                    <div id="feedback-title" class="font-bold text-sm"></div>
+                    <p id="feedback-text" class="text-xs leading-relaxed"></p>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden btn-manga px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl comic-border-sm text-sm">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Completion Result Card -->
+            <div id="quiz-result" class="hidden bg-white p-8 rounded-3xl comic-border text-center space-y-4">
+                <div class="text-6xl animate-bounce">🏆🏁</div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Selamat! SOAL Selesai!</h3>
+                <p class="text-slate-600 text-sm">Kamu berhasil menyelesaikan SOAL Bab III tentang Husnuzan & Suuzan.</p>
+                <div class="inline-block bg-amber-100 p-4 rounded-2xl comic-border-sm my-2">
+                    <span class="text-xs text-amber-800 font-bold block">Nilai Akhir Kamu:</span>
+                    <span id="final-score" class="text-4xl font-extrabold text-slate-900">100</span>
+                </div>
+                <div>
+                    <button onclick="restartQuiz()" class="btn-manga px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl comic-border-sm text-sm">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Jawab SOAL Lagi Dari Awal
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t-4 border-slate-800 py-4 mt-8">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-1">
+            <p class="text-xs font-bold text-slate-700">Dibuat Oleh Azis Fatoni, S.Pd.I | PAI Kelas 3 SD - Semester 1 | Bab III Akhlak Terpuji</p>
+            <p class="text-[11px] text-slate-500">Materi Husnuzan & Suuzan • Gaya 2D Manga Islami Interaktif</p>
+        </div>
+    </footer>
+
+    <script>
+        let isAudioPlaying = false;
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const icon = document.getElementById('audio-icon');
+            const btn = document.getElementById('audio-toggle-btn');
+
+            if (isAudioPlaying) {
+                audio.pause();
+                isAudioPlaying = false;
+                icon.className = "fa-solid fa-volume-xmark";
+                btn.classList.remove('bg-emerald-400', 'animate-pulse-glow');
+                btn.classList.add('bg-amber-400');
+            } else {
+                audio.play().then(() => {
+                    isAudioPlaying = true;
+                    icon.className = "fa-solid fa-volume-high";
+                    btn.classList.remove('bg-amber-400');
+                    btn.classList.add('bg-emerald-400', 'animate-pulse-glow');
+                }).catch(err => {
+                    console.log("Audio play blocked or requires user interaction first:", err);
+                    audio.play().catch(e => console.log(e));
+                });
+            }
+        }
+
+        // Tab Switcher Logic
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => el.classList.add('hidden'));
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.className = "nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-transparent hover:border-slate-800 text-slate-700 hover:bg-emerald-100";
+            });
+
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn px-2.5 py-2 rounded-xl text-xs font-bold border-2 border-slate-800 bg-emerald-500 text-white shadow-[2px_2px_0px_#1e293b]";
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Comic Modal Lightbox
+        function openComicModal() {
+            document.getElementById('comic-modal').classList.remove('hidden');
+        }
+        function closeComicModal() {
+            document.getElementById('comic-modal').classList.add('hidden');
+        }
+
+        // Quiz Data (10 questions)
+        const quizData = [
+            {
+                question: "1. Apa arti dari istilah 'Husnuzan' secara bahasa?",
+                options: ["Berburuk Sangka", "Berbaik Sangka", "Rasa Dengki", "Putus Asa"],
+                correct: 1,
+                explanation: "Husnuzan berasal dari kata 'Husnu' (baik) dan 'Az-Zan' (prasangka), artinya berbaik sangka."
+            },
+            {
+                question: "2. Sikap berburuk sangka kepada Allah Swt. atau orang lain disebut...",
+                options: ["Husnuzan", "Tawakal", "Suuzan", "Qana'ah"],
+                correct: 2,
+                explanation: "Suuzan adalah sikap berburuk sangka yang merupakan akhlak tercela (mazmumah) dan wajib dihindari."
+            },
+            {
+                question: "3. Manakah contoh perilaku Husnuzan saat hujan deras turun ketika hendak bermain?",
+                options: [
+                    "Marah-marah dan mengeluh",
+                    "Menganggap Allah tidak sayang",
+                    "Bersyukur dan meyakini air hujan membawa berkah",
+                    "Sengaja hujan-hujanan sampai sakit"
+                ],
+                correct: 2,
+                explanation: "Anak yang Husnuzan akan bersyukur dan yakin hujan membawa berkah serta hikmah terbaik dari Allah Swt."
+            },
+            {
+                question: "4. Berikut ini yang merupakan MANFAAT berbaik sangka (Husnuzan) kepada Allah Swt. adalah...",
+                options: [
+                    "Hati menjadi gelisah dan cemas",
+                    "Hati menjadi tenang, tenteram, dan selalu bersyukur",
+                    "Mudah marah dan mengeluh",
+                    "Menjadi malas belajar"
+                ],
+                correct: 1,
+                explanation: "Berbaik sangka kepada Allah membuat hati tenang, tenteram, dan membuat kita senantiasa bersyukur."
+            },
+            {
+                question: "5. Apa yang sebaiknya dilakukan Ahmad jika mendapat nilai ulangan yang kurang memuaskan?",
+                options: [
+                    "Suuzan dan menyalahkan Allah",
+                    "Husnuzan dan makin giat belajar untuk perbaikan selanjutnya",
+                    "Berhenti sekolah dan putus asa",
+                    "Menyontek pekerjaan teman"
+                ],
+                correct: 1,
+                explanation: "Husnuzan mendorong kita untuk tetap semangat, belajar giat, dan percaya Allah memberi kesempatan terbaik."
+            },
+            {
+                question: "6. Hukum menerapkan sikap husnuzan (berbaik sangka) kepada Allah Swt. dalam Islam adalah...",
+                options: ["Terpuji (Mahmudah) dan sangat dianjurkan", "Dilarang dan berdosa", "Sia-sia dan merugikan", "Tercela (Mazmumah)"],
+                correct: 0,
+                explanation: "Husnuzan adalah akhlak mahmudah (terpuji) yang sangat dianjurkan oleh Allah Swt. dan Rasulullah Saw."
+            },
+            {
+                question: "7. Mengapa kita harus menjauhi dan menghindari sikap suuzan (berburuk sangka)?",
+                options: [
+                    "Karena suuzan membuat kita dipuji teman",
+                    "Karena suuzan adalah akhlak tercela yang menimbulkan dosa dan merusak hati",
+                    "Karena suuzan disukai malaikat",
+                    "Karena suuzan membuat otak pintar"
+                ],
+                correct: 1,
+                explanation: "Suuzan berasal dari bisikan syaitan, merusak ketenangan hati, dan mendatangkan dosa dari Allah Swt."
+            },
+            {
+                question: "8. Rasulullah SAW bersabda dalam Hadits Qudsi bahwa Allah SWT berfirman: 'Aku sesuai dengan...'",
+                options: ["Harta yang dimiliki hamba-Ku", "Prasangka hamba-Ku kepada-Ku", "Kepintaran hamba-Ku", "Pakaian yang dipakai hamba-Ku"],
+                correct: 1,
+                explanation: "Dalam HR. Bukhari & Muslim, Allah Swt. berfirman bahwa Dia bertindak sesuai dengan prasangka hamba-Nya."
+            },
+            {
+                question: "9. Ketika Aisyah sedang sakit demam, sikap husnuzan yang tepat adalah...",
+                options: [
+                    "Mengeluh sepanjang hari dan tidak mau obat",
+                    "Yakin sakit adalah penggugur dosa dan Allah akan menyembuhkan",
+                    "Menyalahkan teman di sekolah",
+                    "Berhenti berdoa kepada Allah"
+                ],
+                correct: 1,
+                explanation: "Anak saleh meyakini ujian sakit dapat menggugurkan dosa dan menjadi sarana meningkatkan rasa sabar."
+            },
+            {
+                question: "10. Jika doa kita belum dikabulkan oleh Allah Swt., sikap terbaik anak saleh adalah...",
+                options: [
+                    "Suuzan dan berhenti berdoa",
+                    "Tetap berhusnuzan dan yakin Allah tahu waktu terbaik untuk mengabulkannya",
+                    "Marah dan membentak orang tua",
+                    "Menyesal pernah berdoa"
+                ],
+                correct: 1,
+                explanation: "Allah senantiasa mendengar doa hamba-Nya dan mengabulkannya pada waktu yang paling tepat dan terbaik."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userScore = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentQuestionIndex];
+            
+            document.getElementById('question-number').innerText = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            document.getElementById('question-text').innerText = q.question;
+
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-opt-btn w-full text-left p-4 rounded-2xl comic-border-sm font-semibold text-sm transition bg-white hover:bg-emerald-50 text-slate-800 flex items-center justify-between";
+                btn.onclick = () => selectOption(idx);
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-400"></i>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestionIndex];
+            const optBtns = document.querySelectorAll('.quiz-opt-btn');
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            if (selectedIndex === q.correct) {
+                userScore += 10;
+                document.getElementById('quiz-score').innerText = userScore;
+                
+                optBtns[selectedIndex].classList.remove('bg-white');
+                optBtns[selectedIndex].classList.add('bg-emerald-100', 'border-emerald-600', 'text-emerald-900');
+                optBtns[selectedIndex].querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-lg";
+
+                feedbackBox.className = "p-4 rounded-2xl border-2 space-y-1 bg-emerald-50 border-emerald-300 text-emerald-900";
+                feedbackTitle.innerText = "✨ Jawaban Tepat! Luar Biasa! 🎉";
+            } else {
+                optBtns[selectedIndex].classList.remove('bg-white');
+                optBtns[selectedIndex].classList.add('bg-rose-100', 'border-rose-600', 'text-rose-900');
+                optBtns[selectedIndex].querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 text-lg";
+
+                optBtns[q.correct].classList.remove('bg-white');
+                optBtns[q.correct].classList.add('bg-emerald-100', 'border-emerald-600');
+
+                feedbackBox.className = "p-4 rounded-2xl border-2 space-y-1 bg-rose-50 border-rose-300 text-rose-900";
+                feedbackTitle.innerText = "❌ Jawaban Belum Tepat";
+            }
+
+            feedbackText.innerText = q.explanation;
+            feedbackBox.classList.remove('hidden');
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('final-score').innerText = userScore;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            userScore = 0;
+            document.getElementById('quiz-score').innerText = '0';
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
